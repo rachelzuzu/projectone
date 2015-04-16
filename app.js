@@ -48,7 +48,7 @@ app.use(session({
 app.use("/", function (req, res, next) {
 
   req.login = function (user) {
-    //attach login to req object
+    // Remember who is logged in
     req.session.userId = user.id;
     console.log('\n\n\n\n\n\n\n\n\n\n' + req.session.userId);
     //stores user id on the session
