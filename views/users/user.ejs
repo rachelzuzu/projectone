@@ -1,12 +1,19 @@
 <!DOCTYPE HTML>
 <html>
+<head>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
 <body>
+		<div>
+			<a href="users/login">Login</a>
+			<a href="/search">Search</a>
+			<a href="users/signup">Sign Up</a>
+		</div>
   <h1>Welcome, User# <%= ejsUser.id %>:</h1>
   <div>
 
-    <%= ejsUser.first_name %>
-</br>
-    <%= ejsUser.last_name %>
 </br>
     <%= ejsUser.email %>
 </br>

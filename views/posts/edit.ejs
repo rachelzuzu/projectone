@@ -1,6 +1,15 @@
 <!DOCTYPE HTML>
 <html>
+<head><link rel="stylesheet" href="/stylesheets/style.css">
+		<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
 <body>
+	<div>
+			<a href="users/login">Login</a>
+			<a href="/search">Search</a>
+			<a href="users/signup">Sign Up</a>
+	</div>
   <h1>Edit your post:</h1>
   <form method="POST" action="/posts/ <%=ejsPost.id%> ?_method=PUT">
 <!-- uses the method override attribute for PUT -->

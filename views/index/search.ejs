@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>S3arch movi3</title>
+	<title>Search</title>
 	<link rel="stylesheet" href="/stylesheets/style.css">
 		<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -10,33 +10,42 @@
 <body>
 	<div class="container">
 		<div>
-			<a href="/login">Login</a>
+			<a href="users/login">Login</a>
 			<a href="/search">Search</a>
-			<a href="/signup">Sign Up</a>
-			<a href="/profile">Profile</a>
+			<a href="users/signup">Sign Up</a>
+			
 		</div>
 		<div class="row">
 			<div class="col-xs-6 col-xs-offset-3">
 				<form class="myForm" method="GET" action="/search">
-					<input type="text" name="q3" placeholder="Search">
+					<input type="text" name="q" placeholder="landmark">
 					<button>Click me</button>
 				</form>
 			</div>
 		</div>
 		<div class="row">
-			<% if (noMovies) { %>
-			<div class="col-xs-6 col-xs-offset-3"> No results </div>
+			<% if (noHappyHours) { %>
+				<div class="col-xs-6 col-xs-offset-3">No results</div>
+			<% } else { %>
+				<% venues.forEach(function(venue){ %>
+					<div class="row">
+						<div class="col-xs-6 col-xs-offset-3">
+							<%= venue.name %>
+						</div>
+					</div>
+				<% }) %>
 			<% } %>
 		</div>
-		<% movies.forEach(function(movie){ %>
-			<div class="row">
-				<div class="col-xs-6 col-xs-offset-3">
-					<a class="movieLink" href="/movie?id=<%= movie.imdbID %>">
-						<%= movie.Title %>
-					</a>
-				</div>
-			</div>
-			<% }) %>
-		</div>
+	</div>
+
+	<h3>Tell us your favorite landmark and why:</h3>
+	<form method="POST" action="/search">
+
+		<input type="string" name="title" placeholder="Place">
+		<input type="text" name="content" placeholder="Story">
+
+		<button type="submit">Submit</button>
+	</form>
+
 </body>
 </html>

@@ -50,6 +50,7 @@ app.use("/", function (req, res, next) {
   req.login = function (user) {
     //attach login to req object
     req.session.userId = user.id;
+    console.log('\n\n\n\n\n\n\n\n\n\n' + req.session.userId);
     //stores user id on the session
     //log you in once, and store cookie on our end
     //server gives the cookie to the client
@@ -99,9 +100,8 @@ app.get('/posts/new', function(req,res) {
 app.post('/posts', function(req,res) {
   var title = req.body.title;
   var content = req.body.content;
-  var imageUrl = req.body.imageUrl;
 
-  db.Post.create({title:title, content:content, imageUrl:imageUrl})
+  db.Post.create({title:title, content:content})
               .then(function(ejsPosts) {
                 res.redirect('/posts');
               });
@@ -123,7 +123,11 @@ app.get("/posts/:id/edit", function (req, res) {
   var postId=req.params.id;
   db.Post.find(postId)
       .then(function(dbPost) {
-        res.render('posts/edit', {ejsPost:dbPost});
+        if (currentUser === post.user) {
+         res.render('posts/edit', {ejsPost:dbPost})
+        } else {
+         res.send("You cannot edit this post");
+        }
       })
 });
 
@@ -132,14 +136,17 @@ app.put("/posts/:id", function(req, res) {
    var postId = req.params.id;
    var title = req.body.title;
    var content = req.body.content;
-   var imageUrl = req.body.imageUrl; 
 
    db.Post.find(postId)
       .then(function(dbPost) {
-        dbPost.updateAttributes({title:title, content:content, imageUrl:imageUrl})
-        .then(function(dbPost) {
+        if (currentUser === post.user) {
+          dbPost.updateAttributes({title:title, content:content})
+          .then(function(dbPost) {
           res.redirect("/posts/" + postId);
-        });
+          })
+        } else {
+          res.send("You cannot edit this post");
+        }
       });
 });
 
@@ -148,10 +155,14 @@ app.delete("/posts/:id", function(req, res) {
     var postId = req.params.id;
     db.Post.find(postId)
         .then(function(dbPost) {
-          dbPost.destroy()
-          .then(function() {
-            res.redirect("/posts");
-          });
+          if (currentUser === post.user) {
+            dbPost.destroy()
+            .then(function() {
+              res.redirect("/posts");
+            });
+          } else {
+            res.redirect('/');
+          }
         });
 });
 
@@ -203,10 +214,17 @@ app.post("/login", function(req, res) {
   db.User
     .authenticate(email, passwordDigest)
     .then(function (user) {
-          res.send(user);
-          res.redirect("/");
+      req.login(user);
+      res.redirect("/");
     });
 });
+
+//logout
+app.delete('/logout', function(req,res){
+  req.logout();
+  res.redirect('/login');
+});
+
 
 //get user by id using .find method
 app.get('/users/:id', function(req,res) {
@@ -262,8 +280,36 @@ app.delete("/users/:id", function(req, res) {
 //   });
 // });
 
+app.get('/search', function(req, res) {
+  var q = req.query.q;
+
+  if (q) {
+    var url = 'https://api.foursquare.com/v2/venues/search?client_id=GS2UFBH5DEK154U1JSGSDBXELAEK3ROP04A4HCIWJKSAHKGS&client_secret=SIWWSRFESCCHICX3TX0HAD4WWFXUME15IPM0WVVSJJQUS2PO&v=20130815&near=' + q 
+    // + '&query=landmark'
+    ;
+
+    request(url, function(error, response, body) {
+      var venues = JSON.parse(body).response.venues;
+      console.log(venues);
+      res.render('index/search', { noHappyHours: false, venues: venues });
+    });
+  } else {
+    res.render('index/search', { noHappyHours: true });
+  }
+});
 
 
+//submit new data, using post and .create method 
+app.post('/search', function(req,res) {
+  var title = req.body.title;
+  var content = req.body.content;
+  req.currentUser().then(function(user) {
+  db.Post.create({title:title, content:content, UserId: user.id})
+      .then(function(title) {
+      res.redirect('/posts');
+    });
+  })
+});
 
 //starts server on port 3000
 app.listen(3000, function() {
