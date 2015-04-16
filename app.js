@@ -197,7 +197,8 @@ app.post('/users', function(req, res) {
     // db.User.createSecure({email:email, password_digest:password_digest})
               .then(function() {
            // .then(function(ejsUsers) {
-                res.render('users/users');
+                // res.render('users/users');
+                res.redirect("/");
               });
 });
 
@@ -303,12 +304,20 @@ app.get('/search', function(req, res) {
 app.post('/search', function(req,res) {
   var title = req.body.title;
   var content = req.body.content;
+  // var userId = req.session.userId; 
+
+  // db.Post.create({ title: title, content: content, UserId: userId })
+  //   .then(function) {
+
+  //   }
   req.currentUser().then(function(user) {
-  db.Post.create({title:title, content:content, UserId: user.id})
-      .then(function(title) {
-      res.redirect('/posts');
+  console.log('this is a user');
+  console.log(user);
+  db.Post.create({ title: title, content: content, UserId: user.id })
+    .then(function(title) {
+      res.redirect('posts');
     });
-  })
+  });
 });
 
 //starts server on port 3000
