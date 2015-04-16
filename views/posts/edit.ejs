@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+  <h1>Edit your post:</h1>
+  <form method="POST" action="/posts/ <%=ejsPost.id%> ?_method=PUT">
+<!-- uses the method override attribute for PUT -->
+<!-- populate edit form with the values from db -->
+
+    <input type="text" name="title" value="<%=ejsPost.title%>">
+    <input type="content" name="content" value="<%=ejsPost.content%>">
+     <input type="image_url" name="image_url" value="<%=ejsPost.image_url%>">
+
+    <button type="submit">Submit</button>
+  </form>
+
+</body>
+</html>

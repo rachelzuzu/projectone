@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+  <h1>Happy Hour Entry# <%= ejsPost.id %>:</h1>
+  <div>
+
+    <%= ejsPost.title %>
+</br>
+    <%= ejsPost.content %>
+</br>
+    <%= ejsPost.image_url %>
+</br>
+  </div>
+  <form method="POST" action="/posts/<%= ejsPost.id %>?_method=DELETE">
+</br>
+      <button type="submit">Delete Post</button>
+    </form>
+</body>
+</html>
+
+<!-- displays the post title and provides a delete button -->

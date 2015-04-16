@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>S3arch movi3</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+		<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div>
+			<a href="/login">Login</a>
+			<a href="/search">Search</a>
+			<a href="/signup">Sign Up</a>
+			<a href="/profile">Profile</a>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-xs-offset-3">
+				<form class="myForm" method="GET" action="/search">
+					<input type="text" name="q3" placeholder="Search">
+					<button>Click me</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<% if (noMovies) { %>
+			<div class="col-xs-6 col-xs-offset-3"> No results </div>
+			<% } %>
+		</div>
+		<% movies.forEach(function(movie){ %>
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3">
+					<a class="movieLink" href="/movie?id=<%= movie.imdbID %>">
+						<%= movie.Title %>
+					</a>
+				</div>
+			</div>
+			<% }) %>
+		</div>
+</body>
+</html>

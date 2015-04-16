@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+  <h1>Edit your post:</h1>
+  <form method="POST" action="/users/ <%=ejsUser.id%> ?_method=PUT">
+<!-- uses the method override attribute for PUT -->
+<!-- populate edit form with the values from db -->
+
+    <input type="string" name="first_name" value="<%=ejsUser.first_name%>">
+    <input type="string" name="last_name" value="<%=ejsUser.last_name%>">
+     <input type="string" name="email" value="<%=ejsUser.email%>">
+
+    <button type="submit">Submit</button>
+  </form>
+
+</body>
+</html>

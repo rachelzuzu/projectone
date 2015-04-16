@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+  <h1>Welcome, User# <%= ejsUser.id %>:</h1>
+  <div>
+
+    <%= ejsUser.first_name %>
+</br>
+    <%= ejsUser.last_name %>
+</br>
+    <%= ejsUser.email %>
+</br>
+  </div>
+  <form method="POST" action="/users/<%= ejsUser.id %>?_method=DELETE">
+</br>
+      <button type="submit">Delete User</button>
+    </form>
+</body>
+</html>
+
+<!-- displays the post title and provides a delete button -->

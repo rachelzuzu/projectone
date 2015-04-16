@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+  <h1>SF Happy Hours:</h1>
+  <% ejsPosts.forEach
+  (function(post) 
+    { 
+      %> <div> 
+          </br>
+      <%= post.title %> 
+    </br>
+      <%= post.content %> 
+    </br>
+      <%= post.image_url %> 
+        </br>
+      </div> <% 
+
+    }
+  ) 
+  %>
+
+</body>
+</html>
