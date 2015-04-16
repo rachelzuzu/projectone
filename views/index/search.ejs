@@ -38,14 +38,15 @@
 		</div>
 	</div>
 
-	<h3>Post it:</h3>
-	<form method="POST" action="/search">
-
-		<input type="text" name="title" placeholder="Title">
-		<input type="text" name="content" placeholder="Description">
-
-		<button type="submit">Submit</button>
-	</form>
+	<!-- Hide post form if not logged in -->
+	<% if (userId) { %>
+		<h3>Post it:</h3>
+		<form method="POST" action="/search">
+			<input type="text" name="title" placeholder="Title">
+			<input type="text" name="content" placeholder="Description">
+			<button type="submit">Submit</button>
+		</form>
+	<% } %>
 </br>
 </br>
 

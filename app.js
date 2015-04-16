@@ -292,10 +292,10 @@ app.get('/search', function(req, res) {
     request(url, function(error, response, body) {
       var venues = JSON.parse(body).response.venues;
       console.log(venues);
-      res.render('index/search', { noHappyHours: false, venues: venues });
+      res.render('index/search', { noHappyHours: false, venues: venues, userId: req.session.userId });
     });
   } else {
-    res.render('index/search', { noHappyHours: true });
+    res.render('index/search', { noHappyHours: true, userId: req.session.userId });
   }
 });
 
