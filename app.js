@@ -86,7 +86,7 @@ app.get('/posts', function(req,res) {
     // {include: [db.User]}
     )
     .then(function(dbMates){
-    res.render('posts/posts', {ejsPosts: dbMates});
+    res.render('posts/posts', {ejsPosts: dbMates, userId: req.session.userId });
   })
 });
 
@@ -153,17 +153,31 @@ app.put("/posts/:id", function(req, res) {
 //delete route
 app.delete("/posts/:id", function(req, res) {
     var postId = req.params.id;
-    db.Post.find(postId)
-        .then(function(dbPost) {
-          if (currentUser === post.user) {
-            dbPost.destroy()
-            .then(function() {
-              res.redirect("/posts");
-            });
-          } else {
-            res.redirect('/');
-          }
+    // db.Post.find(postId)
+    //     .then(function(dbPost) {
+    //       if (currentUser === post.user) {
+    //         dbPost.destroy()
+    //         .then(function() {
+    //           res.redirect("/posts");
+    //         });
+    //       } else {
+    //         res.redirect('/');
+    //       }
+    //     });
+
+    // Find post
+    db.Post.find(postId).then(function(post) {
+      // Authorize user (only allowed if post belongs to user)
+      if (post.UserId === req.session.userId) {
+        // Destroy post
+        post.destroy().then(function() {
+          // Redirect once destroyed
+          res.redirect('/posts');
         });
+      } else {
+        res.send('Go away hacker!');
+      }
+    });
 });
 
 //ADD USER ROUTES
