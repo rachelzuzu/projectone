@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<% include ../partials/head %>
+
 </head>
 <body>
-		<div>
-			<a href="users/login">Login</a>
-			<a href="/search">Search</a>
-			
-		</div>
+		
+
+	<% include ../partials/navbar %>
+
 	<h1>Create your profile:</h1>
 	<form method="POST" action="/users">
 <!-- after submit, form sends POST request to /posts  -->

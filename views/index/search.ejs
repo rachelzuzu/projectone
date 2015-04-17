@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Search</title>
-	<link rel="stylesheet" href="/stylesheets/style.css">
-		<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<% include ../partials/head %>
 </head>
 <body>
+
+	<% include ../partials/navbar %>
+
 	<div class="container">
-		<div>
-			<a href="users/login">Login</a>
-			<a href="/search">Search</a>
-			<a href="users/signup">Sign Up</a>
-			
-		</div>
+	
 		<div class="row">
 			<div class="col-xs-6 col-xs-offset-3">
+				<h3>Make a random search:</h3>
 				<form class="myForm" method="GET" action="/search">
 					<input type="text" name="q" placeholder="Search">
 					<button>Click me</button>
@@ -38,17 +33,20 @@
 		</div>
 	</div>
 
+<div class="col-xs-6 col-xs-offset-3">
 	<!-- Hide post form if not logged in -->
 	<% if (userId) { %>
-		<h3>Post it:</h3>
+		<h3>Tell us what it is:</h3>
 		<form method="POST" action="/search">
 			<input type="text" name="title" placeholder="Title">
 			<input type="text" name="content" placeholder="Description">
 			<button type="submit">Submit</button>
 		</form>
+		<br>
+		<br>
 	<% } %>
-</br>
-</br>
+</div>
 
+	
 </body>
 </html>

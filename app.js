@@ -186,7 +186,7 @@ app.get('/', function (req, res) {
 })
 
 
-//get all users
+// //get all users
 app.get('/users', function(req,res) {
   db.User.all().then(function(dbUsers){
     res.render('users/users', {ejsUsers: dbUsers});
@@ -194,7 +194,7 @@ app.get('/users', function(req,res) {
 });
 
 //to make new user, retrieve form
-app.get('/users/signup', function(req, res) {
+app.get('/signup', function(req, res) {
 
   res.render('users/signup');
 });
@@ -217,7 +217,7 @@ app.post('/users', function(req, res) {
 });
 
 //login
-app.get("/users/login", function(req, res) {
+app.get("/login", function(req, res) {
     res.render('users/login');
 });
 
@@ -249,6 +249,12 @@ app.get('/users/:id', function(req,res) {
                 res.render('users/user', {ejsUser: banana});
               });
 });
+
+
+// app.get('/signup', function(req,res) {
+//     res.render('signup')});
+              
+
 
 
 //get edit form by id
@@ -325,9 +331,11 @@ app.post('/search', function(req,res) {
 
   //   }
   req.currentUser().then(function(user) {
+    //gets current user
   console.log('this is a user');
   console.log(user);
   db.Post.create({ title: title, content: content, UserId: user.id })
+  //calling line 61
     .then(function(title) {
       res.redirect('posts');
     });
