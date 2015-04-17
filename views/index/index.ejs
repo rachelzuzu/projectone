@@ -8,6 +8,14 @@
 
 		<% include ../partials/navbar %>
 
+		<!-- If a user is logged in, then show the welcome message below, otherwise hide it -->
+		<% if (user !== null) { %>
+			<h1>Welcome <%= user.email %>!</h1>
+			<form method="POST" action="/logout?_method=DELETE">
+				<button>Logout</button>
+			</form>
+		<% } %>	
+		<!-- end welcome message-->
 		<h3>Find the top 30 results on Foursquare for any keyword by clicking search.</h3> 
 		
 

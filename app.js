@@ -15,7 +15,10 @@ var express = require('express'),
   request = require('request'),
 //declare express server(called app)
 	app = express(),
-  bcrypt = require('bcrypt');
+  bcrypt = require('bcrypt'),
+  env = process.env,
+  client_id = env.CLIENT_ID,
+  client_secret = env.CLIENT_SECRET;
 
 //to use ejs templates in views folder, set view engine to be ejs
 app.set('view engine', 'ejs');
@@ -86,7 +89,7 @@ app.get('/posts', function(req,res) {
     // {include: [db.User]}
     )
     .then(function(dbMates){
-    res.render('posts/posts', {ejsPosts: dbMates, userId: req.session.userId });
+      res.render('posts/posts', {ejsPosts: dbMates, userId: req.session.userId });
   })
 });
 
@@ -182,7 +185,17 @@ app.delete("/posts/:id", function(req, res) {
 
 //ADD USER ROUTES
 app.get('/', function (req, res) {
-  res.render('index/index');
+  // check for logged in user
+  req.currentUser().then(function(user) {
+    // if a user is logged in, render the home page and pass that user to the index
+    // inside of variable named user
+    if (user) {
+        res.render('index/index', {user: user});
+    // otherwise (if user is not logged in) render the home page and set user to null
+    } else {
+        res.render('index/index', {user: null});
+    }
+  }) 
 })
 
 
@@ -195,8 +208,17 @@ app.get('/users', function(req,res) {
 
 //to make new user, retrieve form
 app.get('/signup', function(req, res) {
-
-  res.render('users/signup');
+  // Run currentUser function to see if anyone is already logged in
+  req.currentUser().then(function(user) {
+    // conditional to determine if someone is logged in do A, else do B
+    if (user) {
+      // if a user is logged in, log user out and redirect to signup
+      req.logout();
+      res.redirect('/signup');
+    } else {
+      res.render('users/signup');
+    }
+  })
 });
 
 //user submits sign up form
@@ -208,12 +230,13 @@ app.post('/users', function(req, res) {
   // var password_digest = req.body.password_digest;
   console.log("This is req.body " + req.body);
   db.User.createSecure(req.body.email, req.body.passwordDigest)
-    // db.User.createSecure({email:email, password_digest:password_digest})
-              .then(function() {
-           // .then(function(ejsUsers) {
-                // res.render('users/users');
-                res.redirect("/");
-              });
+  // create a user then pass the created user to a function (below)
+    .then(function(user) {
+      // login user that we just created
+      req.login(user);
+      // render home page and pass logged in user to that page
+      res.render("index/index", {user: user});
+    });
 });
 
 //login
@@ -230,7 +253,9 @@ app.post("/login", function(req, res) {
     .authenticate(email, passwordDigest)
     .then(function (user) {
       req.login(user);
-      res.redirect("/");
+      // once user is logged in, render home page and pass logged in user to 
+      // the home page inside of user variable
+      res.render("index/index", {user:user});
     });
 });
 
@@ -305,7 +330,7 @@ app.get('/search', function(req, res) {
   var q = req.query.q;
 
   if (q) {
-    var url = 'https://api.foursquare.com/v2/venues/search?client_id=GS2UFBH5DEK154U1JSGSDBXELAEK3ROP04A4HCIWJKSAHKGS&client_secret=SIWWSRFESCCHICX3TX0HAD4WWFXUME15IPM0WVVSJJQUS2PO&v=20130815&near=' + q 
+    var url = 'https://api.foursquare.com/v2/venues/search?client_id='+client_id+'&client_secret='+client_secret+'&v=20130815&near=' + q 
     // + '&query=landmark'
     ;
 
@@ -341,6 +366,8 @@ app.post('/search', function(req,res) {
     });
   });
 });
+
+
 
 app.listen(process.env.PORT || 3000)
 
