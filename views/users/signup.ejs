@@ -10,16 +10,20 @@
 
 	<% include ../partials/navbar %>
 
-	<h1>Create your profile:</h1>
-	<form method="POST" action="/users">
+<div class="col-xs-6 col-xs-offset-3">
+	<h1>Sign up:</h1>
+	<form method="POST" class="navbar-form navbar-left" action="/users">
 <!-- after submit, form sends POST request to /posts  -->
 
-		<input type="text" name="email" placeholder="Email">
-		<input type="password" name="passwordDigest" placeholder="Password">
+		<input type="text" class="form-control" name="email" placeholder="Email">
+		<input type="password" class="form-control" name="passwordDigest" placeholder="Password">
 	
-		<button type="submit">Submit</button>
+		<button type="submit" class="btn btn-default">Submit</button>
 	</form>
-	
+</div>	
+
+<% include ../partials/footer %>
+
 </body>
 </html>
 

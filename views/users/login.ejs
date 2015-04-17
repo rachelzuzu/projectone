@@ -7,10 +7,18 @@
 	
 	<% include ../partials/navbar %>
 
-	<form method="POST" action="/login">
-		<input type="string" name="email" placeholder="Email">
-		<input type="password" name="password" placeholder="Password">
-		<button>Login</button>
+<div class="col-xs-6 col-xs-offset-3">
+
+<h1>Log in:</h1>
+	<form method="POST" class="navbar-form navbar-left" action="/login">
+		<input type="string" class="form-control" name="email" placeholder="Email">
+		<input type="password" class="form-control" name="password" placeholder="Password">
+		<button class="btn btn-default">Login</button>
 	</form>
+
+</div>
+
+<% include ../partials/footer %>
+
 </body>
 </html>

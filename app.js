@@ -1,4 +1,5 @@
 // this is EXTRA branch
+
 //declare variables for all the packages we are going to use
 //require all of our modules
 //declare package express
@@ -17,9 +18,12 @@ var express = require('express'),
 //declare express server(called app)
 	app = express(),
   bcrypt = require('bcrypt'),
+//to hide keys from api
   env = process.env,
   client_id = env.CLIENT_ID,
   client_secret = env.CLIENT_SECRET;
+  
+
 
 //to use ejs templates in views folder, set view engine to be ejs
 app.set('view engine', 'ejs');
@@ -320,12 +324,6 @@ app.delete("/users/:id", function(req, res) {
 });
 
 
-
-// app.get('/sync', function(req, res) {
-//   db.sequelize.sync().then(function() {
-//     res.send("Sequelize Sync done!");
-//   });
-// });
 
 app.get('/search', function(req, res) {
   var q = req.query.q;
