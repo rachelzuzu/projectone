@@ -342,7 +342,7 @@ app.post('/search', function(req,res) {
   });
 });
 
-//starts server on port 3000
-app.listen(3000, function() {
-	var msg = '* Listening on Port 3000 *';
-});
+app.listen(process.env.PORT || 3000)
+
+
+
