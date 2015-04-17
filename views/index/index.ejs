@@ -5,23 +5,27 @@
 		<% include ../partials/head %>
 	</head>
 	<body>
+		<!-- first wrap in a div with class of 'container' -->
+		<div class="container">
+			<!-- then wrap in a div with class of 'row' -->
+			<div class="row">
+				<!-- then wrap in a div with class of 'col-md-8' << this can be customized to your liking -->
+				<!-- see http://getbootstrap.com/examples/grid/ for details and class names -->
+				<div class="col-md-8 col-md-offset-2">
+					<% include ../partials/navbar %>
 
-		<% include ../partials/navbar %>
+					<!-- If a user is logged in, then show the welcome message below, otherwise hide it -->
+					<% if (user !== null) { %>
+						<h1>Welcome <%= user.email %>!</h1>
+						<form method="POST" action="/logout?_method=DELETE">
+							<button>Logout</button>
+						</form>
+					<% } %>	
+					<!-- end welcome message-->
+					<h3>Find the top 30 results on Foursquare for any keyword by clicking search.</h3> 
 
-		<!-- If a user is logged in, then show the welcome message below, otherwise hide it -->
-		<% if (user !== null) { %>
-			<h1>Welcome <%= user.email %>!</h1>
-			<form method="POST" action="/logout?_method=DELETE">
-				<button>Logout</button>
-			</form>
-		<% } %>	
-		<!-- end welcome message-->
-		<h3>Find the top 30 results on Foursquare for any keyword by clicking search.</h3> 
-		
-
+				</div>
+			</div>
 		</div>
-
-	</span>
-
 	</body>
 </html>
