@@ -221,6 +221,7 @@ app.get('/signup', function(req, res) {
       req.logout();
       res.redirect('/signup');
     } else {
+      //render signup page
       res.render('users/signup');
     }
   })
@@ -327,6 +328,7 @@ app.delete("/users/:id", function(req, res) {
 
 app.get('/search', function(req, res) {
   var q = req.query.q;
+  
 
   if (q) {
     var url = 'https://api.foursquare.com/v2/venues/search?client_id='+client_id+'&client_secret='+client_secret+'&v=20130815&near=' + q 
@@ -335,6 +337,7 @@ app.get('/search', function(req, res) {
 
     request(url, function(error, response, body) {
       var venues = JSON.parse(body).response.venues;
+      console.log("this is a string");
       console.log(venues);
       res.render('index/search', { noHappyHours: false, venues: venues, userId: req.session.userId });
     });
